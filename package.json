@@ -1,0 +1,40 @@
+{
+  "name": "js-queue2",
+  "version": "1.2.0",
+  "description": "Handle js queue tasks，as concurrency，timeout, part, priority and more.",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "babel-node ./test/index.js",
+    "build": "babel src/queue.js  --out-file src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vmod-hub/js-queue.git"
+  },
+  "keywords": [
+    "js",
+    "queue",
+    "js-queue"
+  ],
+  "author": "vmod",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vmod-hub/js-queue/issues"
+  },
+  "homepage": "https://github.com/vmod-hub/js-queue#readme",
+  "dependencies": {
+    "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.3.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.22.0",
+    "babel-register": "^6.22.0",
+    "babel-resolver": "^1.1.0"
+  }
+}

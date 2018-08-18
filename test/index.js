@@ -1,57 +1,43 @@
-# js-queue
-Handle js queue tasks，as concurrency，timeout, part, priority and more.
+import Queue from "../src/queue";
+// import Queue from 'js-queue2';
 
-
-### features 主要特性
-- queue 队列
-- concurrency 并发队列
-- part concurrency 分段并发队列
-- timeout 任务超时
-- priority  优先级
-
-### Usage
-
-##### Install.
-```
-git clone https://github.com/vmod-hub/js-queue.git
-npm install
-npm run test
-
-npm install `js-queue2`
-```
-
-ES6, CommonJS, and UMD builds are available with each distribution.
-
-##### quick start
-
-```
 async function sleep(time) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve(time);
+      // reject(time)
     }, time);
   });
 }
 
-let queue = new Queue();
+function test1() {
+  // quick start 快速使用
+  let queue = new Queue();
 
-queue
-  .add(async () => {
-    return sleep(2000);
-  })
+  queue
+    .add(async () => {
+      return sleep(2000);
+    })
+    .then(data => {
+      console.log("1", data);
+    });
 
-queue
-  .add(() => {
-    return sleep(1000);
-  })
+  queue
+    .add(() => {
+      return sleep(1000);
+    })
+    .then(data => {
+      console.log("2", data);
+    });
 
-let data = await queue.getQueueData();
-console.log("queue data", data);
-```
-##### timeout
+  queue.getQueueData().then(data => {
+    console.log("queue data", data);
+  });
+}
 
-```
-let queue = new Queue({
+function test2() {
+  // timeout 设置超时
+  let queue = new Queue({
     timeout: 1500
   });
 
@@ -92,11 +78,11 @@ let queue = new Queue({
   queue.getQueueData().then(data => {
     console.log("queue data", data);
   });
-```
- ##### concurrency
+}
 
-```
-let queue = new Queue({
+function test3() {
+  // fast 并发模式
+  let queue = new Queue({
     maxPending: 2
   });
 
@@ -127,11 +113,11 @@ let queue = new Queue({
   queue.getQueueData().then(data => {
     console.log("queue data", data);
   });
-```
-##### part concurrency
+}
 
-```
-let queue = new Queue({
+function test4() {
+  // part 分段并发模式
+  let queue = new Queue({
     maxPending: 2,
     mode: "part"
   });
@@ -179,11 +165,57 @@ let queue = new Queue({
   queue.getQueueData().then(data => {
     console.log("queue data", data);
   });
-  
-```
+}
 
-##### more
+function test5() {
+  // priority 优先级
+  let queue = new Queue();
 
-```
-npm run test
-```
+  queue
+    .add(async () => {
+      return sleep(3000);
+    })
+    .then(data => {
+      console.log("1", data);
+    });
+
+  queue
+    .add(
+      () => {
+        return sleep(1000);
+      },
+      {
+        index: 9
+      }
+    )
+    .then(data => {
+      console.log("2", data);
+    });
+
+  queue
+    .add(
+      () => {
+        return sleep(2000);
+      },
+      {
+        index: 10
+      }
+    )
+    .then(data => {
+      console.log("3", data);
+    });
+
+  queue.getQueueData().then(data => {
+    console.log("queue data", data);
+  });
+}
+
+function main() {
+  test1();
+  // test2();
+  // test3();
+  // test4();
+  // test5();
+}
+
+main();
